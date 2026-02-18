@@ -4,10 +4,10 @@ import zipfile
 import requests
 from tqdm import tqdm
 
-URL = "https://files.grouplens.org/datasets/movielens/ml-32m.zip"
+URL = "https://files.grouplens.org/datasets/movielens/ml-latest-small.zip"
 DATA_DIR = "data"
-ZIP_PATH = os.path.join(DATA_DIR, "ml-32m.zip")
-EXTRACTED_FOLDER = os.path.join(DATA_DIR, "ml-32m")
+ZIP_PATH = os.path.join(DATA_DIR, "ml-latest-small.zip")
+EXTRACTED_FOLDER = os.path.join(DATA_DIR, "ml-latest-small")
 
 def download_file(url, dest_path):
     response = requests.get(url, stream=True)
