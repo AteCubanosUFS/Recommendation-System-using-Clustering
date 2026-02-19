@@ -64,7 +64,5 @@ def main():
     if os.path.exists(ZIP_PATH):
         os.remove(ZIP_PATH)
 
-    print("Processo finalizado com sucesso")
-
 if __name__ == "__main__":
     main()
