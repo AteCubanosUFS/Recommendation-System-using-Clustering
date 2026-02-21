@@ -2,8 +2,6 @@ import streamlit as st
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from matplotlib.lines import Line2D
-
-# Importando as suas próprias funções modularizadas!
 from data_processing import carregar_dados
 from ml_models import treinar_modelo, gerar_grafico_cotovelo, gerar_grafico_silhueta
 from recommender import gerar_relatorio, recomendar_filmes, obter_detalhes_cluster, gerar_descricao_cluster
@@ -16,7 +14,7 @@ st.set_page_config(
     page_icon="🎬"
 )
 
-# --- CONFIGURAÇÃO DE CORES (EXPANDIDA PARA 25 CLUSTERS) ---
+# --- CONFIGURAÇÃO DE CORES (25 CLUSTERS) ---
 PALETA_CLUSTERS = {
     0: '#636EFA',  # Azul
     1: '#00CC96',  # Verde
@@ -44,10 +42,10 @@ PALETA_CLUSTERS = {
     23: '#2E8B57', # Verde Mar
     24: '#FF1493'  # Rosa Profundo
 }
-COR_ALVO = '#FF0000' # Vermelho (Exclusivo para o Usuário Alvo)
+COR_ALVO = '#FF0000' # Vermelho (usuário alvo)
 
 # ==========================================
-# INÍCIO DA INTERFACE (FRONT-END)
+# INÍCIO DA INTERFACE
 # ==========================================
 st.title("🎬 Sistema de Recomendação com K-Means")
 
@@ -158,7 +156,6 @@ elif aba_selecionada == "🌐 Todos os Clusters":
         qtd_us, top_gens_c, med_filmes_c = obter_detalhes_cluster(i, df_clusters, ratings)
         titulo_persona, descricao_persona = gerar_descricao_cluster(top_gens_c)
         
-        # Formatação profissional: Título limpo, métricas em negrito e descrição em texto corrido
         st.subheader(f"Cluster {i}: {titulo_persona}")
         
         # Verifica se é o cluster dos insatisfeitos para adaptar o texto
@@ -171,7 +168,6 @@ elif aba_selecionada == "🌐 Todos os Clusters":
             
         st.write(descricao_persona)
         
-        # Uma linha sutil para separar cada cluster
         st.markdown("---")
 
 # ------------------------------------------------
@@ -262,7 +258,7 @@ elif aba_selecionada == "🍿 Recomendações":
 elif aba_selecionada == "🗄️ Tabela de Dados":
     st.header("🗄️ Repositório de Dados")
     
-    # Criando sub-abas internas para não poluir a tela
+    # Criando sub-abas internas
     sub_dados1, sub_dados2 = st.tabs(["📊 Matriz do Modelo (Proporções)", "🎞️ Dados Brutos (Merge)"])
 
     with sub_dados1:
@@ -288,7 +284,7 @@ elif aba_selecionada == "🗄️ Tabela de Dados":
         st.subheader("Histórico Bruto de Avaliações")
         st.write("Esta é a união das tabelas de Filmes e Notas antes do tratamento estatístico.")
         
-        # Filtro por Usuário Alvo
+        # Filtro por usuário alvo
         if st.checkbox("Mostrar apenas avaliações do Usuário Selecionado", value=True):
             dados_brutos = tabela_completa[tabela_completa['userId'] == usuario_selecionado]
         else:

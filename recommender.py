@@ -79,10 +79,6 @@ def obter_detalhes_cluster(cluster_alvo, df_clusters, df_ratings):
 def gerar_descricao_cluster(top_generos):
     if top_generos.empty:
         return "Cluster Indefinido", "Dados insuficientes para mapear o perfil de consumo."
-    
-    # === TRAVA DE SEGURANÇA PARA O GRUPO DE HATERS ===
-    if top_generos.sum() == 0:
-        return "Perfil Crítico / Insatisfeito", "Grupo caracterizado pela ausência de avaliações positivas (notas >= 3.0). A IA os agrupou pela falta de afinidade com o catálogo."
         
     genero_principal = top_generos.index[0]
     
