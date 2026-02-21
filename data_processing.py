@@ -1,18 +1,18 @@
 import pandas as pd
 import streamlit as st
 
-# --- CARREGAMENTO E PREPARAÇÃO DOS DADOS ---
+# CARREGAMENTO E PREPARAÇÃO DOS DADOS
 @st.cache_data
 def carregar_dados():
     
-    # Carregando os dados do arquivo .dat
+    
     tabela_movie = pd.read_csv('DataBase/movies.dat', sep='::', engine='python', names=['movieId', 'title', 'genres'], encoding='latin-1', header=0)
     tabela_ratings = pd.read_csv('DataBase/ratings.dat', sep='::', engine='python', names=['userId', 'movieId', 'rating', 'timestamp'], header=0)
     
     # Joga a coluna timestamp fora para economizar memória
     tabela_ratings = tabela_ratings.drop(columns=['timestamp'])
     
-    # Mergiando as tabelas lidas
+    # Mergiando as tabelas lidas com base no movieId
     tabela_merge = tabela_ratings.merge(tabela_movie, on='movieId')
     
     # Ideia de filtro para usar os filmes que as pessoas gostam
@@ -31,11 +31,9 @@ def carregar_dados():
     total_filmes_usuario = tabela_contagem_favoritos.sum(axis=1)
     tabela_proporcao = tabela_contagem_favoritos.div(total_filmes_usuario, axis=0).fillna(0)
     
-    # Pega todos os IDs únicos que existiam desde o começo
+    # Pegar todos os IDs únicos 
     todos_os_usuarios = tabela_ratings['userId'].unique()
-    
-    # Força a tabela a ter todos esses IDs. 
-    # Quem sumiu na filtragem ganha uma linha cheia de 0.0
+    # Força a tabela a ter todos esses IDs, quem sumiu na filtragem ganha uma linha cheia de 0
     tabela_proporcao = tabela_proporcao.reindex(todos_os_usuarios, fill_value=0.0)
     
     return tabela_movie, tabela_ratings, tabela_merge, tabela_proporcao
