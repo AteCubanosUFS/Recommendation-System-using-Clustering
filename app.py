@@ -269,7 +269,7 @@ elif aba_selecionada == "🗄️ Tabela de Dados":
         st.subheader("📊 Distribuição por Grupo")
         contagem = df_clusters['Cluster'].value_counts().sort_index().reset_index()
         contagem.columns = ['Cluster', 'Quantidade de Usuários']
-        st.dataframe(contagem, hide_index=True)
+        st.dataframe(contagem, hide_index=True, use_container_width=False)
 
     with sub_dados2:
         st.subheader("Histórico Bruto de Avaliações")
