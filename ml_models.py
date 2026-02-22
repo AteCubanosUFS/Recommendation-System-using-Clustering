@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
-# --- TREINAMENTO DO MODELO ---
+
 @st.cache_resource
 def treinar_modelo(tabela_proporcao, k):
     kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)

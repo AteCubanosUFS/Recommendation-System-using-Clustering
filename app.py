@@ -7,14 +7,14 @@ from ml_models import treinar_modelo, gerar_grafico_cotovelo, gerar_grafico_silh
 from recommender import gerar_relatorio, recomendar_filmes, obter_detalhes_cluster, gerar_descricao_cluster
 
 
-# --- CONFIGURAÇÃO DA PÁGINA ---
+# CONFIGURAÇÃO DA PÁGINA 
 st.set_page_config(
     page_title="Recomendação de Filmes com K-Means", 
     layout="wide", 
     page_icon="🎬"
 )
 
-# --- CONFIGURAÇÃO DE CORES (25 CLUSTERS) ---
+# CONFIGURAÇÃO DE CORES (25 CLUSTERS) 
 PALETA_CLUSTERS = {
     0: '#636EFA',  # Azul
     1: '#00CC96',  # Verde
@@ -44,12 +44,11 @@ PALETA_CLUSTERS = {
 }
 COR_ALVO = '#FF0000' # Vermelho (usuário alvo)
 
-# ==========================================
+
 # INÍCIO DA INTERFACE
-# ==========================================
 st.title("🎬 Sistema de Recomendação com K-Means")
 
-# --- MENU LATERAL (Sidebar) ---
+# MENU LATERAL 
 st.sidebar.header("⚙️ Painel de Controle")
 num_clusters = st.sidebar.slider("Quantidade de clusters (K)", min_value=1, max_value=25, value=5)
 
@@ -63,9 +62,8 @@ qtd_rec = st.sidebar.slider("Quantos filmes recomendar?", min_value=1, max_value
 
 cluster_atual = df_clusters.loc[usuario_selecionado, 'Cluster']
 
-# ==========================================
+
 # DIVISÃO EM ABAS COM MEMÓRIA DE ESTADO
-# ==========================================
 st.markdown("---")
 aba_selecionada = st.radio(
     "Navegue pelas seções:",
@@ -75,9 +73,8 @@ aba_selecionada = st.radio(
 )
 st.markdown("---")
 
-# ------------------------------------------------
+
 # ABA 1: PERFIL DO USUÁRIO
-# ------------------------------------------------
 if aba_selecionada == "👤 Perfil do Usuário":
     st.header(f"Dados Pessoais - Usuário {usuario_selecionado}")
     st.info(f"🧠 O **K-Means** classificou este usuário no **cluster {cluster_atual}**.")
@@ -108,9 +105,8 @@ if aba_selecionada == "👤 Perfil do Usuário":
             )
             st.dataframe(tabela_favoritos, use_container_width=True, hide_index=True)
 
-# ------------------------------------------------
+
 # ABA 2: DETALHES DO CLUSTER
-# ------------------------------------------------
 elif aba_selecionada == "👥 Detalhes do Cluster":
     st.header(f"Visão Geral do cluster {cluster_atual}")
     st.write("Entenda o comportamento das pessoas que possuem o mesmo padrão de gosto que este usuário:")
@@ -143,9 +139,8 @@ elif aba_selecionada == "👥 Detalhes do Cluster":
             if prop > 0:
                 st.write(f"- **{gen}** representa **{prop*100:.1f}%** das escolhas deste cluster.")
 
-# ------------------------------------------------
+
 # ABA 3: TODAS OS CLUSTERS (NOVA VISÃO GERAL)
-# ------------------------------------------------
 elif aba_selecionada == "🌐 Todos os Clusters":
     st.header(f"Visão Geral: {num_clusters} Clusters")
     st.write("Resumo do agrupamento gerado pelo modelo K-Means para toda a base de usuários.")
@@ -170,9 +165,8 @@ elif aba_selecionada == "🌐 Todos os Clusters":
         
         st.markdown("---")
 
-# ------------------------------------------------
+
 # ABA 4: GRÁFICOS
-# ------------------------------------------------
 elif aba_selecionada == "📊 Gráficos":
     
     st.header("📊 Visualização dos Clusters")
@@ -230,9 +224,7 @@ elif aba_selecionada == "📊 Gráficos":
         st.pyplot(fig_silhueta)
         st.success("💡 Quanto mais próximo de 1.0, melhor a definição e separação dos clusters.")
 
-# ------------------------------------------------
 # ABA 5: RECOMENDAÇÕES (REATIVO)
-# ------------------------------------------------
 elif aba_selecionada == "🍿 Recomendações":
     st.header("🍿 Recomendações para usuário - ID: " + str(usuario_selecionado))
     st.info(f"#### Cluster {cluster_atual}")
@@ -252,9 +244,8 @@ elif aba_selecionada == "🍿 Recomendações":
         else:
             st.warning("Não há recomendações novas suficientes para este usuário.")
             
-# ------------------------------------------------
+
 # ABA 6: TABELA DE DADOS E BASTIDORES
-# ------------------------------------------------
 elif aba_selecionada == "🗄️ Tabela de Dados":
     st.header("🗄️ Repositório de Dados")
     
